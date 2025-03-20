@@ -8,10 +8,10 @@ import java.math.BigDecimal
 
 class Cartao {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @field:Id
+    @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
-    @Enumerated(EnumType.STRING)
+    @field:Enumerated(EnumType.STRING)
     var tipo_cartao: TipoCartao = TipoCartao.CARTAO_SEM_ANUIDADE
     var valor_anuidade_mensal: BigDecimal = BigDecimal.ZERO
     var valor_limite_disponivel: BigDecimal = BigDecimal.ZERO
