@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ClienteRepository : JpaRepository<Cliente, Long> {
-    fun findByCpf(cpf: String): Cliente?
+    fun existsByCpf(cpf: String): Boolean
 }

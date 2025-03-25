@@ -6,3 +6,4 @@ import com.desafio.tecnico.models.Cliente
 interface RegraElegibilidade {
     fun verificarElegibilidade (cliente: Cliente, cartao: Cartao): Boolean
 }
+

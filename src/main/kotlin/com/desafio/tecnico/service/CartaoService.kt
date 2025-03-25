@@ -1,6 +1,6 @@
 package com.desafio.tecnico.service
 
-
+import com.desafio.tecnico.exceptions.RegraNegocioException
 import com.desafio.tecnico.models.Cartao
 import com.desafio.tecnico.models.Cliente
 import com.desafio.tecnico.repository.CartaoRepository
@@ -13,10 +13,13 @@ class CartaoService(
     private val regras: List<RegraElegibilidade>
 ) {
     fun listarCartoesElegiveis(cliente: Cliente): List<Cartao> {
-        val cartoesElegiveis = cartaoRepository.listarCartoesElegiveis(cliente.renda_mensal)
-        return cartoesElegiveis.filter { cartao ->
-            regras.all { regra -> regra.verificarElegibilidade(cliente,cartao) }
-        }
-    }
 
+        val cartoesPorRenda = cartaoRepository.listarCartoesElegiveis(cliente.renda_mensal)
+
+        val cartoesElegiveis = cartoesPorRenda.filter { cartao ->
+            regras.all { regra -> regra.verificarElegibilidade(cliente, cartao) }
+        }
+
+        return cartoesElegiveis
+    }
 }
