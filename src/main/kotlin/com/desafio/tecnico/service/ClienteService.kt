@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service
 class ClienteService(private val clienteRepository: ClienteRepository) {
 
     fun salvarCliente(cliente: Cliente): Cliente {
-        return clienteRepository.save(cliente)
+        return clienteRepository.findByCpf(cliente.cpf) ?: clienteRepository.save(cliente)
     }
+
 }

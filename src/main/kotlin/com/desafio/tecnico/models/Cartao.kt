@@ -15,7 +15,10 @@ class Cartao {
     var tipo_cartao: TipoCartao = TipoCartao.CARTAO_SEM_ANUIDADE
     var valor_anuidade_mensal: BigDecimal = BigDecimal.ZERO
     var valor_limite_disponivel: BigDecimal = BigDecimal.ZERO
-    var status: String = ""
-    var renda_minima: BigDecimal = BigDecimal.ZERO
+    @Column(name = "renda_minima")
+    var rendaMinima: BigDecimal = BigDecimal.ZERO
+    var status: String = "APROVADO"
+
+
 
 }

@@ -9,7 +9,7 @@ import java.time.LocalDate
 class Cliente {
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
+    var id: Long = 0
 
     var nome: String = ""
     var cpf: String = ""
@@ -20,4 +20,7 @@ class Cliente {
     var email: String = ""
     var telefone_whatsapp: String = ""
 
+
 }
+
+

@@ -1,10 +1,10 @@
 package com.desafio.tecnico.repository
 
-import com.desafio.tecnico.models.Cliente
+import com.desafio.tecnico.models.Solicitacao
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
-interface ClienteRepository : JpaRepository<Cliente, Long> {
-    fun findByCpf(cpf: String): Cliente?
+interface SolicitacaoRepository : JpaRepository<Solicitacao, UUID> {
 }

@@ -6,6 +6,7 @@ import com.desafio.tecnico.dto.SolitacaoResponse
 import com.desafio.tecnico.models.Cliente
 import com.desafio.tecnico.service.CartaoService
 import com.desafio.tecnico.service.ClienteService
+import com.desafio.tecnico.service.SolicitacaoService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,46 +15,24 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 import java.util.*
 
-
 @RestController
 @RequestMapping("/cartoes")
 class CartaoController(
-    private val cartaoService: CartaoService,
-    private val clienteService: ClienteService
-
+    private val solicitacaoService: SolicitacaoService,
 ) {
-
     @PostMapping
     fun verificarCartoesElegiveis(@RequestBody cliente: Cliente): ResponseEntity<SolitacaoResponse> {
 
-        val clienteSalvo = clienteService.salvarCliente(cliente)
+        val numeroSolicitacao = UUID.randomUUID()
 
-        val cartoes = cartaoService.listarCartoesElegiveis(clienteSalvo)
+//        val cartoes = solicitacaoService.processarSolicitacao(cliente, numeroSolicitacao)
+//
+//
+//        val clienteSalvo = clienteService.salvarCliente(cliente)
 
-        val response = SolitacaoResponse(
-            numero_solicitacao = UUID.randomUUID(),
-            data_solicitacao = LocalDateTime.now(),
-            cliente = ClienteResponse(
-                nome = clienteSalvo.nome,
-                cpf = clienteSalvo.cpf,
-                idade = clienteSalvo.idade,
-                data_nascimento = clienteSalvo.data_nascimento,
-                uf = clienteSalvo.uf,
-                renda_mensal = clienteSalvo.renda_mensal,
-                email = clienteSalvo.email,
-                telefone_whatsapp = clienteSalvo.telefone_whatsapp
-            ),
-            cartoes_ofertados = cartoes.map { cartao ->
-                CartaoOfertadoResponse(
-                    tipoCartao = cartao.tipo_cartao,
-                    valor_anuidade_mensal = cartao.valor_anuidade_mensal,
-                    valor_limite_disponivel = cartao.valor_limite_disponivel,
-                    status = cartao.status
-                )
-            }
-        )
+        val response = solicitacaoService.processarSolicitacao(cliente, numeroSolicitacao)
+
 
         return ResponseEntity.ok(response)
     }
 }
-
