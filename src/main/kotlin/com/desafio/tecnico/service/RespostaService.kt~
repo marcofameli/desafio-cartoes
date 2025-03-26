@@ -2,7 +2,7 @@ package com.desafio.tecnico.service
 
 import com.desafio.tecnico.dto.CartaoOfertadoResponseDTO
 import com.desafio.tecnico.dto.ClienteResponse
-import com.desafio.tecnico.dto.SolicitacaoResponseDTO
+import com.desafio.tecnico.dto.SolitacaoResponseDTO
 import com.desafio.tecnico.models.Cartao
 import com.desafio.tecnico.models.Cliente
 import org.springframework.stereotype.Service
@@ -11,8 +11,8 @@ import java.util.*
 
 @Service
 class RespostaService {
-    fun criarResposta(cliente: Cliente, numeroSolicitacao: UUID, cartoes: List<Cartao>): SolicitacaoResponseDTO {
-        return SolicitacaoResponseDTO(
+    fun criarResposta(cliente: Cliente, numeroSolicitacao: UUID, cartoes: List<Cartao>): SolitacaoResponseDTO {
+        return SolitacaoResponseDTO(
             numero_solicitacao = numeroSolicitacao,
             data_solicitacao = LocalDateTime.now(),
             cliente = ClienteResponse(

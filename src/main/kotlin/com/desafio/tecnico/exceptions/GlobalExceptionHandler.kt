@@ -13,7 +13,6 @@ import org.springframework.web.context.request.WebRequest
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-    private val logger = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun MethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ProblemDetailsDTO> {
@@ -42,7 +41,7 @@ class GlobalExceptionHandler {
         )
 
         val problem = ProblemDetailsDTO(
-            codigo = "422",  // Código 422
+            codigo = "422",
             mensagem = "Regra de Negócio Não Atendida",
             detalhe_erro = detalheErro
         )
@@ -60,7 +59,7 @@ class GlobalExceptionHandler {
         )
 
         val problem = ProblemDetailsDTO(
-            codigo = "500",  // Código 500
+            codigo = "500",
             mensagem = "Um erro inesperado ocorreu.",
             detalhe_erro = detalheErro
         )

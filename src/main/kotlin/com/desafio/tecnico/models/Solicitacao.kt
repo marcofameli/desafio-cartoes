@@ -6,18 +6,18 @@ import java.util.*
 
 @Entity
 @Table(name = "solicitacao")
-class Solicitacao {
+data class Solicitacao (
 
     @field:Id
     @field:Column(name = "numero_solicitacao", unique = true, nullable = false, updatable = false)
-    var numeroSolicitacao: UUID = UUID.randomUUID()
+    var numeroSolicitacao: UUID = UUID.randomUUID(),
 
     @field:Column(name = "data_solicitacao", nullable = false, updatable = false)
-    var dataSolicitacao: LocalDateTime = LocalDateTime.now()
+    var dataSolicitacao: LocalDateTime = LocalDateTime.now(),
 
     @field:ManyToOne
     @field:JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    lateinit var cliente: Cliente
+     var cliente: Cliente,
 
     @field:ManyToMany
     @field:JoinTable(
@@ -27,6 +27,8 @@ class Solicitacao {
     )
     var cartoes: List<Cartao>? = null
 
+) {
+    constructor() : this(UUID.randomUUID(), LocalDateTime.now(), Cliente(), null)
 }
 
 
