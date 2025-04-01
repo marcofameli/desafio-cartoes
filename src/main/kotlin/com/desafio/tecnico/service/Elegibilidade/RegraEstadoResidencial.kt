@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class RegraEstadoResidencial : RegraElegibilidade {
     override fun verificarElegibilidade(cliente: Cliente, cartao: Cartao): Boolean {
         return if (cliente.uf == "SP") {
-            if (cliente.idade in 25..30) {
+            if (cliente.idade in 25..29) {
                 true
             } else {
                 cartao.tipo_cartao == TipoCartao.CARTAO_COM_CASHBACK || cartao.tipo_cartao == TipoCartao.CARTAO_SEM_ANUIDADE

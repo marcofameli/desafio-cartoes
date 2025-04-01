@@ -1,13 +1,12 @@
-import com.desafio.tecnico.exceptions.RegraNegocioException
 import com.desafio.tecnico.models.Cliente
 import com.desafio.tecnico.repository.ClienteRepository
 import com.desafio.tecnico.service.ClienteService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
+import kotlin.test.assertEquals
 
 
 class ClienteServiceTest {
@@ -22,7 +21,7 @@ class ClienteServiceTest {
 
 
 
-        every { clienteRepository.existsByCpf(cliente.cpf) } returns false
+        every { clienteRepository.getByCpf(cliente.cpf) } returns cliente
         every { clienteRepository.save(cliente) } returns cliente
 
 
@@ -34,16 +33,20 @@ class ClienteServiceTest {
     }
 
     @Test
-    fun `deve lançar exceção quando CPF já estiver cadastrado`() {
+    fun `deve atualizar a renda mensal do cliente e criar uma solicitação nova quando CPF já estiver cadastrado`() {
 
-        val cliente = Cliente(id = 1, cpf = "12345678900", nome = "João Silva")
+        val clienteExistente =
+            Cliente(id = 1, cpf = "12345678900", nome = "João Silva", renda_mensal = BigDecimal(2000))
+        val clienteAtualizado =
+            Cliente(id = 1, cpf = "12345678900", nome = "João Silva", renda_mensal = BigDecimal(3000))
 
+        every { clienteRepository.getByCpf(clienteExistente.cpf) } returns clienteExistente
+        every { clienteRepository.save(any<Cliente>()) } returns clienteAtualizado
 
-        every { clienteRepository.existsByCpf(cliente.cpf) } returns true
+        val clienteSalvo = clienteService.salvarCliente(clienteAtualizado)
 
-
-        assertFailsWith<RegraNegocioException> {
-            clienteService.salvarCliente(cliente)
-        }
+        assertEquals(clienteAtualizado.renda_mensal, clienteSalvo.renda_mensal)
+        verify { clienteRepository.save(clienteExistente) }
     }
 }
+

@@ -26,11 +26,6 @@ class CartaoController(
         description = "Realiza verificação de cartões para um cliente"
     )
 
-    @ApiResponse(responseCode = "200", description = "Solicitação processada com sucesso")
-    @ApiResponse(responseCode = "204", description = "Solicitação processada sem cartões elegíveis")
-    @ApiResponse(responseCode = "400", description = "Dados inválidos")
-    @ApiResponse(responseCode = "422", description = "Regra de negócio não atendida")
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
 
     fun verificarCartoesElegiveis(@Valid @RequestBody wrapper: ClienteRequestWrapper): ResponseEntity<SolicitacaoResponseDTO> {
 

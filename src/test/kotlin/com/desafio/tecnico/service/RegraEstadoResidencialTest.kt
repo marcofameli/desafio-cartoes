@@ -34,7 +34,6 @@ class RegraEstadoResidencialTest {
     }
 
 
-
     @Test
     fun `cliente de SP entre 25-30 anos pode ter qualquer tipo de cartao`() {
         val cliente = criarCliente(uf = "SP", idade = 28)
@@ -78,8 +77,6 @@ class RegraEstadoResidencialTest {
         )
     }
 
-
-
     @Test
     fun `cliente de RJ pode ter qualquer tipo de cartao independente da idade`() {
         val cliente = criarCliente(uf = "RJ", idade = 40)
@@ -103,11 +100,5 @@ class RegraEstadoResidencialTest {
         val cartaoParceiros = criarCartao(TipoCartao.CARTAO_DE_PARCEIROS)
         assertTrue(regra.verificarElegibilidade(cliente, cartaoParceiros))
     }
-
-    @Test
-    fun `cliente de SP com exatamente 30 anos pode qualquer cartao`() {
-        val cliente = criarCliente(uf = "SP", idade = 30)
-        val cartaoParceiros = criarCartao(TipoCartao.CARTAO_DE_PARCEIROS)
-        assertTrue(regra.verificarElegibilidade(cliente, cartaoParceiros))
-    }
 }
+

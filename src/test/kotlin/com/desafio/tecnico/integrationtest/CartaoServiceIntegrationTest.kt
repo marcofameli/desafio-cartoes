@@ -69,6 +69,7 @@ class CartaoServiceIntegrationTest {
 
     @Test
     fun `deve filtrar apenas cartoes elegiveis`() {
+
         val cliente = Cliente(renda_mensal = BigDecimal(4000))
 
         val resultado = cartaoService.listarCartoesElegiveis(cliente)

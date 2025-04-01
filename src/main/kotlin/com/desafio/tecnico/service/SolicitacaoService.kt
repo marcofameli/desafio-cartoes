@@ -25,6 +25,7 @@ class SolicitacaoService(
             return ResponseEntity.noContent().build()
         }
 
+
         val solicitacao = Solicitacao(
             numeroSolicitacao = numeroSolicitacao,
             dataSolicitacao = LocalDateTime.now(),

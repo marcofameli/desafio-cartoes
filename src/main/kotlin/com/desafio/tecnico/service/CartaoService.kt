@@ -1,6 +1,5 @@
 package com.desafio.tecnico.service
 
-import com.desafio.tecnico.exceptions.RegraNegocioException
 import com.desafio.tecnico.models.Cartao
 import com.desafio.tecnico.models.Cliente
 import com.desafio.tecnico.repository.CartaoRepository

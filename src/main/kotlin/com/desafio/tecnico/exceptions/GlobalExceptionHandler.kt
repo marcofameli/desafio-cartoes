@@ -2,9 +2,10 @@ package com.desafio.tecnico.exceptions
 
 import com.desafio.tecnico.dto.DetalheErroDTO
 import com.desafio.tecnico.dto.ProblemDetailsDTO
-import org.slf4j.LoggerFactory
+import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -14,8 +15,8 @@ import org.springframework.web.context.request.WebRequest
 class GlobalExceptionHandler {
 
 
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun MethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ProblemDetailsDTO> {
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun RegraNegocioException(ex: HttpMessageNotReadableException, request: WebRequest): ResponseEntity<ProblemDetailsDTO> {
         val detalheErro = DetalheErroDTO(
             app = "Cartoes",
             tipo_erro = "DADOS_INVALIDOS",
@@ -32,12 +33,17 @@ class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(RegraNegocioException::class)
-    fun handleRegraNegocioException(ex: RegraNegocioException, request: WebRequest): ResponseEntity<ProblemDetailsDTO> {
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun handleRegraNegocioException(ex: ConstraintViolationException, request: WebRequest): ResponseEntity<ProblemDetailsDTO> {
+
+        val mensagensDeErro = ex.constraintViolations.joinToString("; ") {
+            it.message
+        }
+
         val detalheErro = DetalheErroDTO(
             app = "Cartoes",
             tipo_erro = "REGRA_NEGOCIO_NAO_ATENDIDA",
-            mensagem_interna = ex.message ?: "Cliente não atende aos critérios de elegibilidade para o cartão."
+            mensagem_interna = mensagensDeErro
         )
 
         val problem = ProblemDetailsDTO(
@@ -66,4 +72,5 @@ class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(problem)
     }
+
 }

@@ -10,7 +10,7 @@ import java.math.BigDecimal
 @Repository
 interface CartaoRepository : JpaRepository<Cartao, Long> {
 
-    @Query("SELECT c FROM Cartao c WHERE c.rendaMinima <= :rendaMensal AND :rendaMensal >= c.rendaMinima")
+    @Query("SELECT c FROM Cartao c WHERE c.rendaMinima <= :rendaMensal")
     fun listarCartoesElegiveis(rendaMensal: BigDecimal): List<Cartao>
 
 }

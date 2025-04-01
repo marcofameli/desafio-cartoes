@@ -1,6 +1,5 @@
 package com.desafio.tecnico.service
 
-import com.desafio.tecnico.exceptions.RegraNegocioException
 import com.desafio.tecnico.models.Cliente
 import com.desafio.tecnico.repository.ClienteRepository
 import org.springframework.stereotype.Service
@@ -9,9 +8,11 @@ import org.springframework.stereotype.Service
 class ClienteService(private val clienteRepository: ClienteRepository) {
 
     fun salvarCliente(cliente: Cliente): Cliente {
-        if (clienteRepository.existsByCpf(cliente.cpf)) {
-            throw RegraNegocioException("CPF já cadastrado.")
-        }
-        return clienteRepository.save(cliente)
+        val clienteJaExiste = clienteRepository.getByCpf(cliente.cpf) ?: return clienteRepository.save(cliente)
+
+        clienteJaExiste.renda_mensal = cliente.renda_mensal
+
+        return clienteRepository.save(clienteJaExiste)
+
     }
 }
